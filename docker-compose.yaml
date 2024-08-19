@@ -17,6 +17,7 @@ services:
 
   hoppscotch-db:
     image: postgres:15
+    restart: unless-stopped
     ports:
       - "5437:5432"
     user: postgres
@@ -26,6 +27,8 @@ services:
       # NOTE: Please UPDATE THIS PASSWORD!
       POSTGRES_PASSWORD: testpass
       POSTGRES_DB: hoppscotch
+    volumes:
+      - hoppscotch-db-data:/var/lib/postgresql/data:rw
     healthcheck:
       test:
         [
@@ -35,3 +38,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
+volumes:
+  hoppscotch-db-data:
